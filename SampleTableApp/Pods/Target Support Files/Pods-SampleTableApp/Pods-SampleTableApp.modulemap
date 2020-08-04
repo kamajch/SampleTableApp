@@ -1,0 +1,6 @@
+framework module Pods_SampleTableApp {
+  umbrella header "Pods-SampleTableApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
