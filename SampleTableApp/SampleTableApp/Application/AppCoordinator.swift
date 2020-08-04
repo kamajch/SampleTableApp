@@ -16,7 +16,7 @@ protocol Coordinator {
 }
 
 private enum Constants {
-    static let mainColor: UIColor = UIColor(red: 34 / 255, green: 39 / 255, blue: 47 / 255, alpha: 1)
+    static let mainColor: UIColor = UIColor.gray
     static let navigationBarTintColor: UIColor = UIColor.white
     static let sampeTableVCTitle: String = "Sample Table App"
 }
@@ -35,6 +35,10 @@ class AppCoordinator: Coordinator {
         showMain()
     }
     
+    func showCharacterDetails(for character: CharacterModel) {
+        self.navigationController.pushViewController(prepareCharacterDetailsVC(character: character), animated: true)
+    }
+    
     private func configureNavigationBar() {
         self.navigationController.navigationBar.isHidden = false
         self.navigationController.navigationBar.barTintColor = Constants.mainColor
@@ -48,8 +52,22 @@ class AppCoordinator: Coordinator {
     }
     
     private func prepareMainTableVC() -> MainTableViewController {
-        let vc = MainTableViewController()
+        var characters: [CharacterModel] = []
+        characters.append(CharacterModel(id: 1, name: "character 1", status: "statis 1", gender: "Male", imageUrl: nil, episodes: [], url: "url 1"))
+        characters.append(CharacterModel(id: 2, name: "character 2", status: "statis 2", gender: "Male", imageUrl: nil, episodes: [], url: "url 2"))
+        characters.append(CharacterModel(id: 3, name: "character 3", status: "statis 3", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
+        characters.append(CharacterModel(id: 4, name: "character 4", status: "statis 4", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
+        characters.append(CharacterModel(id: 5, name: "character 5", status: "statis 5", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
+        let viewModel = MainTableViewModel(characters: characters)
+        let vc = MainTableViewController(viewModel: viewModel)
         vc.title = Constants.sampeTableVCTitle
+        vc.coordinator = self
+        return vc
+    }
+    private func prepareCharacterDetailsVC(character: CharacterModel) -> CharacterDetailsViewController {
+        let vm = CharacterDetailsViewModel(character: character)
+        let vc = CharacterDetailsViewController(viewModel: vm)
+        vc.title = character.name
         return vc
     }
 }
