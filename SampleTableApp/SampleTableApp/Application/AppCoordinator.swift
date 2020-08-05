@@ -59,14 +59,16 @@ class AppCoordinator: Coordinator {
         characters.append(CharacterModel(id: 4, name: "character 4", status: "statis 4", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
         characters.append(CharacterModel(id: 5, name: "character 5", status: "statis 5", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
         let viewModel = MainTableViewModel(characters: characters)
-        let vc = MainTableViewController(viewModel: viewModel)
+        let vc = MainTableViewController()
         vc.title = Constants.sampeTableVCTitle
+        vc.setViewModel(for: viewModel)
         vc.coordinator = self
         return vc
     }
     private func prepareCharacterDetailsVC(character: CharacterModel) -> CharacterDetailsViewController {
         let vm = CharacterDetailsViewModel(character: character)
-        let vc = CharacterDetailsViewController(viewModel: vm)
+        let vc = CharacterDetailsViewController()
+        vc.setViewModel(for: vm)
         vc.title = character.name
         return vc
     }

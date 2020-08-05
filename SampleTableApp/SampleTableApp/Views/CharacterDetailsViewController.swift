@@ -15,82 +15,109 @@ class CharacterDetailsViewController: UIViewController {
     var characterStatusLabel: UILabel!
     var characterGenderLabel: UILabel!
     var characterUrlLabel: UILabel!
+    var tableTitleLabel: UILabel!
     var episodeTableView: UITableView!
-    var viewModel: CharacterDetailsViewModel! {
-        didSet {
-            characterNameLabel.text = viewModel.getCharacterName
-            characterStatusLabel.text = viewModel.getStatus
-            characterGenderLabel.text = viewModel.getGender
-        }
-    }
     
-    init(viewModel: CharacterDetailsViewModel) {
-        super.init(nibName: nil, bundle: nil)
-        loadViewIfNeeded()
-        self.viewModel = viewModel
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var viewModel: CharacterDetailsViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
+    func setViewModel(for model: CharacterDetailsViewModel) {
+        viewModel = model
+    }
     private func setupView() {
         view.backgroundColor = UIColor.white
         characterNameLabel = UILabel()
         characterNameLabel.textColor = UIColor.black
-        characterNameLabel.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        characterNameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         characterNameLabel.textAlignment = .left
         characterNameLabel.numberOfLines = 1
+        characterNameLabel.text = "B/D"
         view.addSubview(characterNameLabel)
         
         characterStatusLabel = UILabel()
         characterStatusLabel.textColor = UIColor.black
-        characterStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        characterStatusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         characterStatusLabel.textAlignment = .left
         characterStatusLabel.numberOfLines = 1
+        characterStatusLabel.text = "B/D"
         view.addSubview(characterStatusLabel)
         
         characterGenderLabel = UILabel()
         characterGenderLabel.textColor = UIColor.black
-        characterGenderLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        characterGenderLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         characterGenderLabel.textAlignment = .left
         characterGenderLabel.numberOfLines = 1
+        characterGenderLabel.text = "B/D"
         view.addSubview(characterGenderLabel)
         
         characterUrlLabel = UILabel()
         characterUrlLabel.textColor = UIColor.black
-        characterUrlLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        characterUrlLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         characterUrlLabel.textAlignment = .left
         characterUrlLabel.numberOfLines = 1
         view.addSubview(characterUrlLabel)
         
+        tableTitleLabel = UILabel()
+        tableTitleLabel.textColor = UIColor.black
+        tableTitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        tableTitleLabel.textAlignment = .center
+        view.addSubview(tableTitleLabel)
+        
         episodeTableView = UITableView()
+        episodeTableView.separatorStyle = .none
+        episodeTableView.register(EpisodeTableViewCell.self, forCellReuseIdentifier: EpisodeTableViewCell.cellId)
+        episodeTableView.delegate = self
+        episodeTableView.dataSource = self
         view.addSubview(episodeTableView)
         
         characterNameLabel.snp.makeConstraints { (make) in
-            make.left.top.right.equalToSuperview().offset(10)
+            make.left.right.equalToSuperview().offset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
         }
         characterStatusLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(10)
-            make.top.equalTo(characterNameLabel.snp.bottom).offset(5)
+            make.top.equalTo(characterNameLabel.snp.bottom).offset(10)
         }
         characterGenderLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(10)
-            make.top.equalTo(characterStatusLabel.snp.bottom).offset(5)
+            make.top.equalTo(characterStatusLabel.snp.bottom).offset(10)
         }
         characterUrlLabel.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(10)
-            make.top.equalTo(characterGenderLabel.snp.bottom).offset(5)
+            make.top.equalTo(characterGenderLabel.snp.bottom).offset(15)
+        }
+        tableTitleLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview().offset(10)
+            make.top.equalTo(characterUrlLabel.snp.bottom).offset(25)
         }
         episodeTableView.snp.makeConstraints { (make) in
             make.left.right.equalToSuperview().offset(10)
-            make.top.equalTo(characterUrlLabel.snp.bottom).offset(5)
+            make.top.equalTo(tableTitleLabel.snp.bottom).offset(15)
             make.bottom.equalToSuperview().offset(10)
         }
+        
+        characterNameLabel.text = viewModel.getCharacterName
+        characterStatusLabel.text = viewModel.getStatus
+        characterGenderLabel.text = viewModel.getGender
+        characterUrlLabel.text = viewModel.getUrl
+        tableTitleLabel.text = viewModel.getTitleText
+    }
+}
+
+extension CharacterDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.getEpisodesCount
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.cellId, for: indexPath) as! EpisodeTableViewCell
+        cell.setEpisode(for: viewModel.getEpisode(for: indexPath.row))
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
     }
 }

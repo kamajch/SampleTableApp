@@ -26,13 +26,13 @@ class MainTableViewCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    private let characterImage: UIImageView = {
+    private lazy var characterImage: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
         return imgView
     }()
- 
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -55,13 +55,72 @@ class MainTableViewCell: UITableViewCell {
             make.right.equalToSuperview().offset(20)
         }
     }
- 
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.characterImage.image = nil
+        self.characterNameLabel.text = nil
+        self.characterStatusLabel.text = nil
+    }
+
     func setCharacter(for model: CharacterModel) {
         characterNameLabel.text = model.name
         characterStatusLabel.text = model.status
+        characterImage.loadImage(urlString: model.imageUrl ?? "")
+//        if let url = URL(string: model.imageUrl ?? "") {
+//            loadImage(from: url)
+//        }
+    }
+    
+    private func loadImage(from url: URL) {
+        self.characterImage.loadImage(urlString: url.absoluteString)
+        let apiManager = ApiManager(baseUrl: url)
+        apiManager.downloadImage(url: url) { [weak self] result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self?.characterImage.image = image
+                    self?.characterImage.clipsToBounds = true
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
+
+
+
+extension UIImageView {
+    func loadImage(urlString: String) {
+        let imageCache = NSCache<NSString, UIImage>()
+              
+        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+            self.image = cachedImage
+            return
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("Couldn't download image: ", error)
+                return
+            }
+            
+            guard let data = data else { return }
+            guard let image = UIImage(data: data) else { return }
+            imageCache.setObject(image, forKey: urlString as NSString)
+            
+            DispatchQueue.main.async {
+                self.image = image
+            }
+        }.resume()
+
+    }
+}
+

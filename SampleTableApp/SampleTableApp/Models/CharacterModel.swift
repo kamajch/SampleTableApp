@@ -16,4 +16,14 @@ struct CharacterModel: Codable {
     var imageUrl: String?
     var episodes: [String]?
     let url: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case status
+        case gender
+        case imageUrl = "image"
+        case episodes = "episode"
+        case url
+    }
 }
