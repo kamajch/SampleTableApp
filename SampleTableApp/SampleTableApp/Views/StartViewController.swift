@@ -33,6 +33,13 @@ class StartViewController: UIViewController {
                 self?.coordinator?.showMainTable(for: characters)
             }
         }
+        viewModel.downloadError = { [weak self] (alert) in
+            if let alert = alert {
+                DispatchQueue.main.async {
+                    self?.present(alert, animated: true)
+                }
+            }
+        }
         if NetworkStatusManager.shared.isInternetConnected() {
             viewModel.startLoadData()
         } else {
@@ -66,7 +73,7 @@ class StartViewController: UIViewController {
     private func showNoInternetInfo() {
         titleLabel.isHidden = true
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "noInternet")
+        imageView.image = UIImage(imageLiteralResourceName: "noInternet")
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         

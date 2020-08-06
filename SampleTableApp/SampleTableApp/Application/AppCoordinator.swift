@@ -23,7 +23,6 @@ private enum Constants {
 
 class AppCoordinator: Coordinator {
     var navigationController: UINavigationController = LightContentNavigationController()
-    
     var rootViewController: UIViewController {
         return navigationController
     }
@@ -32,7 +31,6 @@ class AppCoordinator: Coordinator {
         configureNavigationBar()
         showMain()
     }
-    
     func showCharacterDetails(for character: CharacterModel) {
         self.navigationController.pushViewController(prepareCharacterDetailsVC(character: character), animated: true)
     }

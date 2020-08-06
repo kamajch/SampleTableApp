@@ -9,8 +9,8 @@
 import Foundation
 
 class MainTableViewModel {
-    private var characters: [CharacterModel] = []
     private let apiManager = ApiManager(baseUrl: API.baseUrl)
+    private var characters: [CharacterModel] = []
     
     var isLoading: Bool = false {
         didSet {
@@ -19,19 +19,17 @@ class MainTableViewModel {
     }
     var valueChanges: (() -> Void)?
     var updateLoadingStatus: (() -> Void)?
+    var rowsCount: Int {
+        return self.characters.count
+    }
     
     init(characters: [CharacterModel]) {
         self.characters = self.sortCharacters(characters: characters)
     }
     
-    var getRowsCount: Int {
-        return self.characters.count
-    }
-    
     func getCharacterFor(row: Int) -> CharacterModel {
         return characters[row]
     }
-    
     func getCharactersFromApi() {
         if isLoading == false {
             isLoading = true

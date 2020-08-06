@@ -17,20 +17,22 @@ class EpisodeTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         label.textAlignment = .left
+        label.numberOfLines = 2
         return label
     }()
     private let episodeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 13, weight: .light)
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 13, weight: .light)
-        label.textAlignment = .left
+        label.textAlignment = .right
+        label.numberOfLines = 2
         return label
     }()
     
@@ -50,12 +52,12 @@ class EpisodeTableViewCell: UITableViewCell {
         episodeLabel.snp.makeConstraints { (make) in
             make.right.equalTo(dateLabel.snp.left)
             make.centerY.equalToSuperview()
-            make.width.equalTo(100)
+            make.width.equalTo(90)
         }
         dateLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.width.equalTo(100)
-            make.right.equalToSuperview().offset(5)
+            make.width.equalTo(110)
+            make.right.equalToSuperview().inset(10)
         }
     }
     

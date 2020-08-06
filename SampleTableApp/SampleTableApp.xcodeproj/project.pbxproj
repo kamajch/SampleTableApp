@@ -28,6 +28,7 @@
 		AAE5CD8324DC68D70000E2E4 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8224DC68D70000E2E4 /* StartViewModel.swift */; };
 		AAE5CD8524DC7E4B0000E2E4 /* NetworkStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8424DC7E4B0000E2E4 /* NetworkStatusManager.swift */; };
 		AAE5CD8824DC7F760000E2E4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8724DC7F760000E2E4 /* Reachability.swift */; };
+		AAE5CD8D24DC9B6C0000E2E4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8C24DC9B6C0000E2E4 /* UIImage+Extension.swift */; };
 		DA52FBF7DB002D0139444060 /* Pods_SampleTableApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC1A09C75A5F7C6F9F15BEA8 /* Pods_SampleTableApp.framework */; };
 		F1A1C8766AF035EFDAFC0511 /* Pods_SampleTableAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D12380D36E2F8A57863258 /* Pods_SampleTableAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		AAE5CD8224DC68D70000E2E4 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		AAE5CD8424DC7E4B0000E2E4 /* NetworkStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusManager.swift; sourceTree = "<group>"; };
 		AAE5CD8724DC7F760000E2E4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		AAE5CD8C24DC9B6C0000E2E4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		C6D12380D36E2F8A57863258 /* Pods_SampleTableAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTableAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1A09C75A5F7C6F9F15BEA8 /* Pods_SampleTableApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTableApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -195,6 +197,7 @@
 			children = (
 				AADF9E2D24D895EF00A2DD92 /* Assets.xcassets */,
 				AAE5CD8624DC7F5D0000E2E4 /* Classes */,
+				AAE5CD8B24DC9B510000E2E4 /* Extensions */,
 				AADF9E3224D895EF00A2DD92 /* Info.plist */,
 				AADF9E2F24D895EF00A2DD92 /* LaunchScreen.storyboard */,
 			);
@@ -204,8 +207,8 @@
 		AAE5CD7824DB1B190000E2E4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				AAE5C8F224D9EEA70000E2E4 /* MainTableViewCell.swift */,
 				AAE5CD7924DB1B420000E2E4 /* EpisodeTableViewCell.swift */,
+				AAE5C8F224D9EEA70000E2E4 /* MainTableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -226,6 +229,14 @@
 				AAE5CD8724DC7F760000E2E4 /* Reachability.swift */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		AAE5CD8B24DC9B510000E2E4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AAE5CD8C24DC9B6C0000E2E4 /* UIImage+Extension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		FF6D4F3D2D8E203716F8114F /* Frameworks */ = {
@@ -438,6 +449,7 @@
 				AAE5CD8124DB374D0000E2E4 /* CharacterData.swift in Sources */,
 				AAE5CD8524DC7E4B0000E2E4 /* NetworkStatusManager.swift in Sources */,
 				AAE5CD7A24DB1B420000E2E4 /* EpisodeTableViewCell.swift in Sources */,
+				AAE5CD8D24DC9B6C0000E2E4 /* UIImage+Extension.swift in Sources */,
 				AADF9E2724D895EE00A2DD92 /* SceneDelegate.swift in Sources */,
 				AAE5C8ED24D9DC7B0000E2E4 /* CharacterModel.swift in Sources */,
 			);

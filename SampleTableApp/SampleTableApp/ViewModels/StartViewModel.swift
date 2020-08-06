@@ -6,7 +6,7 @@
 //  Copyright © 2020 Klaudiusz Majchrowski. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class StartViewModel {
     private let apiManager = ApiManager(baseUrl: API.baseUrl)
@@ -18,6 +18,7 @@ class StartViewModel {
     
     var updateLoadingStatus: ((Bool) -> Void)?
     var downloadSuccess: ((CharacterData?) -> Void)?
+    var downloadError: ((UIAlertController?) -> Void)?
     
     func startLoadData() {
         getCharactersFromApi()
@@ -31,12 +32,16 @@ class StartViewModel {
                 switch result {
                 case .success(let characters):
                     self?.downloadSuccess?(characters)
-                    self?.updateLoadingStatus?(self?.isLoading ?? false)
                 case .failure(let error):
-                    print(error.localizedDescription)
-//                    self?.updateLoadingStatus?(self?.isLoading ?? false)
+                    self?.downloadError?(self?.getAlert(message: error.localizedDescription))
                 }
             }
         }
+    }
+    
+    private func getAlert(message: String) -> UIAlertController {
+        let alert = UIAlertController(title: "Download error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return alert
     }
 }

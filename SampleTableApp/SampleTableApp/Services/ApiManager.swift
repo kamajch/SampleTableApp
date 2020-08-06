@@ -9,30 +9,26 @@
 import Foundation
 import UIKit
 
-//enum ApiManagerError: Error {
-//    case RequestFailure
-//    case InvalidResponse
-//    case Unknown
-//}
-
 final class ApiManager {
-//    typealias CharacterDataCompletion = ([CharacterModel]?, ApiManagerError?) -> ()
     private let baseUrl: URL?
     private let imageCache = NSCache<NSString, UIImage>()
     
     init(baseUrl: URL?) {
         self.baseUrl = baseUrl
     }
+    init() {
+        self.baseUrl = nil
+    }
     
     func getCharactersFromApi(completion: @escaping (Result<CharacterData, Error>) -> Void) {
         guard let url = baseUrl else { return }
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data else {
-              if let error = error {
-                completion(.failure(error))
-                return
-              }
-              fatalError("Data and error are nil")
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                fatalError("Data and error are nil")
             }
             
             let result = Result(catching: {
@@ -42,41 +38,21 @@ final class ApiManager {
         }
         .resume()
     }
-    
-    func downloadImage(url: URL, completion: @escaping (Result<UIImage?, Error>) -> Void) {
-            if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-                completion(.success(cachedImage))
-            } else {
-                URLSession.shared.dataTask(with: url) { (data, _, error) in
-                    guard let data = data else {
-                      if let error = error {
-                        completion(.failure(error))
-                        return
-                      }
-                      fatalError("Data and error are nil")
-                    }
-                    
-                    let image = UIImage(data: data)
-                    let result = Result(catching: {
-                        image
-                    })
-                    if let image = image {
-                        self.imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                    }
-                    completion(result)
+    func getEpisodeFromApi(url: URL, completion: @escaping (Result<EpisodeModel, Error>) -> Void) {
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data else {
+                if let error = error {
+                    completion(.failure(error))
+                    return
                 }
-                .resume()
+                fatalError("Data and error are nil")
             }
+            
+            let result = Result(catching: {
+                try JSONDecoder().decode(EpisodeModel.self, from: data)
+            })
+            completion(result)
         }
-//    private func getCharactersFromJSON(data: Data?, completion: CharacterDataCompletion) {
-//        if let data = data {
-//            do {
-//                let characters = try JSONDecoder().decode([CharacterModel].self, from: data)
-//                completion(characters, nil)
-//            } catch {
-//                print(error.localizedDescription)
-//                completion(nil, .InvalidResponse)
-//            }
-//        }
-//    }
+        .resume()
+    }
 }

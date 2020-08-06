@@ -8,17 +8,13 @@
 
 import UIKit
 
-class MainTableViewController: UITableViewController {
-    // MARK: - Properties
-    
+class MainTableViewController: UITableViewController {    
     private let tableRefreshControl = UIRefreshControl()
     private let apiManager = ApiManager(baseUrl: API.baseUrl)
     
     var viewModel: MainTableViewModel!
     weak var coordinator: AppCoordinator?
-    
-    // MARK: - Methods
-    
+        
     init() {
         super.init(style: .plain)
     }
@@ -51,14 +47,26 @@ class MainTableViewController: UITableViewController {
         setupTableView()
     }
     
-    // MARK: - Table view data source
-
+    private func setupTableView() {
+        tableView.backgroundColor = UIColor.white
+        tableView.separatorStyle = .none
+        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.cellId)
+        tableView.showsVerticalScrollIndicator = true
+        tableView.refreshControl = tableRefreshControl
+        tableRefreshControl.addTarget(self, action: #selector(getCharacterData(_:)), for: .valueChanged)
+    }
+    
+    @objc
+    private func getCharacterData(_ sender: Any?) {
+        viewModel.getCharactersFromApi()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getRowsCount
+        return viewModel.rowsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,19 +83,5 @@ class MainTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character: CharacterModel = viewModel.getCharacterFor(row: indexPath.row)
         coordinator?.showCharacterDetails(for: character)
-    }
-    
-    private func setupTableView() {
-        tableView.backgroundColor = UIColor.white
-        tableView.separatorStyle = .none
-        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.cellId)
-        tableView.showsVerticalScrollIndicator = true
-        tableView.refreshControl = tableRefreshControl
-        tableRefreshControl.addTarget(self, action: #selector(getCharacterData(_:)), for: .valueChanged)
-    }
-    
-    @objc
-    private func getCharacterData(_ sender: Any?) {
-        viewModel.getCharactersFromApi()
     }
 }

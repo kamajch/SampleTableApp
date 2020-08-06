@@ -27,6 +27,10 @@ class CharacterDetailsViewController: UIViewController {
     
     func setViewModel(for model: CharacterDetailsViewModel) {
         viewModel = model
+        viewModel.valueChanged = { [weak self] in
+            self?.episodeTableView.reloadData()
+        }
+        viewModel.downloadEpisodes()
     }
     private func setupView() {
         view.backgroundColor = UIColor.white
@@ -76,7 +80,7 @@ class CharacterDetailsViewController: UIViewController {
         view.addSubview(episodeTableView)
         
         characterNameLabel.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(10)
+            make.left.right.equalToSuperview().inset(10)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
         }
         characterStatusLabel.snp.makeConstraints { (make) in
@@ -96,22 +100,22 @@ class CharacterDetailsViewController: UIViewController {
             make.top.equalTo(characterUrlLabel.snp.bottom).offset(25)
         }
         episodeTableView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview().offset(10)
+            make.left.right.equalToSuperview()
             make.top.equalTo(tableTitleLabel.snp.bottom).offset(15)
             make.bottom.equalToSuperview().offset(10)
         }
         
-        characterNameLabel.text = viewModel.getCharacterName
-        characterStatusLabel.text = viewModel.getStatus
-        characterGenderLabel.text = viewModel.getGender
-        characterUrlLabel.text = viewModel.getUrl
-        tableTitleLabel.text = viewModel.getTitleText
+        characterNameLabel.text = viewModel.characterName
+        characterStatusLabel.text = viewModel.characterStatus
+        characterGenderLabel.text = viewModel.characterGender
+        characterUrlLabel.text = viewModel.characterUrl
+        tableTitleLabel.text = viewModel.titleText
     }
 }
 
 extension CharacterDetailsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getEpisodesCount
+        return viewModel.episodesCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeTableViewCell.cellId, for: indexPath) as! EpisodeTableViewCell
@@ -119,6 +123,6 @@ extension CharacterDetailsViewController: UITableViewDataSource, UITableViewDele
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 30
+        return 50
     }
 }
