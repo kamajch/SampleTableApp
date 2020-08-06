@@ -69,6 +69,7 @@ class CharacterDetailsViewController: UIViewController {
         
         episodeTableView = UITableView()
         episodeTableView.separatorStyle = .none
+        episodeTableView.backgroundColor = UIColor.white
         episodeTableView.register(EpisodeTableViewCell.self, forCellReuseIdentifier: EpisodeTableViewCell.cellId)
         episodeTableView.delegate = self
         episodeTableView.dataSource = self

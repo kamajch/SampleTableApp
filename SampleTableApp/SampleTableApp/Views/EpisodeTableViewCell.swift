@@ -37,6 +37,7 @@ class EpisodeTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = UIColor.white
         contentView.addSubview(nameLabel)
         contentView.addSubview(episodeLabel)
         contentView.addSubview(dateLabel)
@@ -44,16 +45,15 @@ class EpisodeTableViewCell: UITableViewCell {
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
-            make.right.equalTo(episodeLabel.snp.left)
+            make.right.equalTo(episodeLabel.snp.left).offset(-10)
         }
         episodeLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(dateLabel.snp.left)
             make.centerY.equalToSuperview()
             make.width.equalTo(100)
-            make.left.equalTo(nameLabel.snp.right).offset(10)
         }
         dateLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalTo(episodeLabel.snp.right).offset(10)
             make.width.equalTo(100)
             make.right.equalToSuperview().offset(5)
         }

@@ -25,6 +25,9 @@
 		AAE5CD7D24DB21D90000E2E4 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD7C24DB21D90000E2E4 /* ApiManager.swift */; };
 		AAE5CD7F24DB23120000E2E4 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD7E24DB23120000E2E4 /* Config.swift */; };
 		AAE5CD8124DB374D0000E2E4 /* CharacterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8024DB374D0000E2E4 /* CharacterData.swift */; };
+		AAE5CD8324DC68D70000E2E4 /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8224DC68D70000E2E4 /* StartViewModel.swift */; };
+		AAE5CD8524DC7E4B0000E2E4 /* NetworkStatusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8424DC7E4B0000E2E4 /* NetworkStatusManager.swift */; };
+		AAE5CD8824DC7F760000E2E4 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5CD8724DC7F760000E2E4 /* Reachability.swift */; };
 		DA52FBF7DB002D0139444060 /* Pods_SampleTableApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC1A09C75A5F7C6F9F15BEA8 /* Pods_SampleTableApp.framework */; };
 		F1A1C8766AF035EFDAFC0511 /* Pods_SampleTableAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D12380D36E2F8A57863258 /* Pods_SampleTableAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +69,9 @@
 		AAE5CD7C24DB21D90000E2E4 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		AAE5CD7E24DB23120000E2E4 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		AAE5CD8024DB374D0000E2E4 /* CharacterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterData.swift; sourceTree = "<group>"; };
+		AAE5CD8224DC68D70000E2E4 /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
+		AAE5CD8424DC7E4B0000E2E4 /* NetworkStatusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusManager.swift; sourceTree = "<group>"; };
+		AAE5CD8724DC7F760000E2E4 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C6D12380D36E2F8A57863258 /* Pods_SampleTableAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTableAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1A09C75A5F7C6F9F15BEA8 /* Pods_SampleTableApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTableApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -156,9 +162,9 @@
 		AADF9E4B24D8AC1700A2DD92 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AAE5CD8024DB374D0000E2E4 /* CharacterData.swift */,
 				AAE5C8EC24D9DC7B0000E2E4 /* CharacterModel.swift */,
 				AAE5C8EE24D9E4250000E2E4 /* EpisodeMode.swift */,
-				AAE5CD8024DB374D0000E2E4 /* CharacterData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -179,6 +185,7 @@
 			children = (
 				AAE5C8F424DA08230000E2E4 /* CharacterDetailsViewModel.swift */,
 				AAE5C8F024D9E6DF0000E2E4 /* MainTableViewModel.swift */,
+				AAE5CD8224DC68D70000E2E4 /* StartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -187,9 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				AADF9E2D24D895EF00A2DD92 /* Assets.xcassets */,
+				AAE5CD8624DC7F5D0000E2E4 /* Classes */,
 				AADF9E3224D895EF00A2DD92 /* Info.plist */,
 				AADF9E2F24D895EF00A2DD92 /* LaunchScreen.storyboard */,
-				AAE5CD7E24DB23120000E2E4 /* Config.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -207,8 +214,18 @@
 			isa = PBXGroup;
 			children = (
 				AAE5CD7C24DB21D90000E2E4 /* ApiManager.swift */,
+				AAE5CD8424DC7E4B0000E2E4 /* NetworkStatusManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		AAE5CD8624DC7F5D0000E2E4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				AAE5CD7E24DB23120000E2E4 /* Config.swift */,
+				AAE5CD8724DC7F760000E2E4 /* Reachability.swift */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		FF6D4F3D2D8E203716F8114F /* Frameworks */ = {
@@ -411,12 +428,15 @@
 				AAE5CD7F24DB23120000E2E4 /* Config.swift in Sources */,
 				AAE5C8F524DA08230000E2E4 /* CharacterDetailsViewModel.swift in Sources */,
 				AAE5C8F724DA08730000E2E4 /* CharacterDetailsViewController.swift in Sources */,
+				AAE5CD8824DC7F760000E2E4 /* Reachability.swift in Sources */,
 				AADF9E4A24D89F4900A2DD92 /* AppCoordinator.swift in Sources */,
 				AAE5C8EF24D9E4250000E2E4 /* EpisodeMode.swift in Sources */,
 				AAE5CD7D24DB21D90000E2E4 /* ApiManager.swift in Sources */,
+				AAE5CD8324DC68D70000E2E4 /* StartViewModel.swift in Sources */,
 				AAE5C8F124D9E6DF0000E2E4 /* MainTableViewModel.swift in Sources */,
 				AADF9E2524D895EE00A2DD92 /* AppDelegate.swift in Sources */,
 				AAE5CD8124DB374D0000E2E4 /* CharacterData.swift in Sources */,
+				AAE5CD8524DC7E4B0000E2E4 /* NetworkStatusManager.swift in Sources */,
 				AAE5CD7A24DB1B420000E2E4 /* EpisodeTableViewCell.swift in Sources */,
 				AADF9E2724D895EE00A2DD92 /* SceneDelegate.swift in Sources */,
 				AAE5C8ED24D9DC7B0000E2E4 /* CharacterModel.swift in Sources */,
@@ -575,6 +595,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5R4TAP88X2;
 				INFOPLIST_FILE = SampleTableApp/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -594,6 +615,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5R4TAP88X2;
 				INFOPLIST_FILE = SampleTableApp/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

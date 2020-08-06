@@ -41,10 +41,8 @@ class MainTableViewModel {
                 case .success(let characters):
                     self?.characters = self?.sortCharacters(characters: characters.results) ?? []
                     self?.valueChanges?()
-                    self?.updateLoadingStatus?()
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self?.updateLoadingStatus?()
                 }
             }
         }

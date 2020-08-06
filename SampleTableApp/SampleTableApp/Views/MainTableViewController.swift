@@ -46,6 +46,8 @@ class MainTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.hidesBackButton = true
         setupTableView()
     }
     
@@ -76,6 +78,7 @@ class MainTableViewController: UITableViewController {
     }
     
     private func setupTableView() {
+        tableView.backgroundColor = UIColor.white
         tableView.separatorStyle = .none
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.cellId)
         tableView.showsVerticalScrollIndicator = true

@@ -22,8 +22,6 @@ private enum Constants {
 }
 
 class AppCoordinator: Coordinator {
-    private var window = UIWindow(frame: UIScreen.main.bounds)
-    
     var navigationController: UINavigationController = LightContentNavigationController()
     
     var rootViewController: UIViewController {
@@ -38,6 +36,9 @@ class AppCoordinator: Coordinator {
     func showCharacterDetails(for character: CharacterModel) {
         self.navigationController.pushViewController(prepareCharacterDetailsVC(character: character), animated: true)
     }
+    func showMainTable(for characters: CharacterData?) {
+        self.navigationController.pushViewController(prepareMainTableVC(for: characters), animated: true)
+    }
     
     private func configureNavigationBar() {
         self.navigationController.navigationBar.isHidden = false
@@ -46,19 +47,19 @@ class AppCoordinator: Coordinator {
         let textAttributes = [NSAttributedString.Key.foregroundColor: Constants.navigationBarTintColor]
         self.navigationController.navigationBar.titleTextAttributes = textAttributes
     }
-    
     private func showMain() {
-        self.navigationController.pushViewController(prepareMainTableVC(), animated: true)
+        self.navigationController.pushViewController(prepareStartVC(), animated: true)
     }
-    
-    private func prepareMainTableVC() -> MainTableViewController {
-        var characters: [CharacterModel] = []
-        characters.append(CharacterModel(id: 1, name: "character 1", status: "statis 1", gender: "Male", imageUrl: nil, episodes: [], url: "url 1"))
-        characters.append(CharacterModel(id: 2, name: "character 2", status: "statis 2", gender: "Male", imageUrl: nil, episodes: [], url: "url 2"))
-        characters.append(CharacterModel(id: 3, name: "character 3", status: "statis 3", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
-        characters.append(CharacterModel(id: 4, name: "character 4", status: "statis 4", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
-        characters.append(CharacterModel(id: 5, name: "character 5", status: "statis 5", gender: "Male", imageUrl: nil, episodes: [], url: "url 3"))
-        let viewModel = MainTableViewModel(characters: characters)
+    private func prepareStartVC() -> StartViewController {
+        let viewModel = StartViewModel()
+        let vc = StartViewController()
+        vc.loadViewIfNeeded()
+        vc.setViewModel(for: viewModel)
+        vc.coordinator = self
+        return vc
+    }
+    private func prepareMainTableVC(for characters: CharacterData?) -> MainTableViewController {
+        let viewModel = MainTableViewModel(characters: characters?.results ?? [])
         let vc = MainTableViewController()
         vc.title = Constants.sampeTableVCTitle
         vc.setViewModel(for: viewModel)

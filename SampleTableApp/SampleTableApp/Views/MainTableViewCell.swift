@@ -35,19 +35,20 @@ class MainTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor.white
         selectionStyle = .none
         contentView.addSubview(characterImage)
         contentView.addSubview(characterNameLabel)
         contentView.addSubview(characterStatusLabel)
         
         characterImage.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview().offset(10)
+            make.left.top.bottom.equalToSuperview()
             make.width.equalTo(100)
         }
         characterNameLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
             make.width.equalTo(130)
-            make.left.equalTo(characterImage.snp.right).offset(20)
+            make.left.equalTo(characterImage.snp.right).offset(10)
         }
         characterStatusLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
@@ -71,29 +72,8 @@ class MainTableViewCell: UITableViewCell {
         characterNameLabel.text = model.name
         characterStatusLabel.text = model.status
         characterImage.loadImage(urlString: model.imageUrl ?? "")
-//        if let url = URL(string: model.imageUrl ?? "") {
-//            loadImage(from: url)
-//        }
-    }
-    
-    private func loadImage(from url: URL) {
-        self.characterImage.loadImage(urlString: url.absoluteString)
-        let apiManager = ApiManager(baseUrl: url)
-        apiManager.downloadImage(url: url) { [weak self] result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self?.characterImage.image = image
-                    self?.characterImage.clipsToBounds = true
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }
-
-
 
 extension UIImageView {
     func loadImage(urlString: String) {
@@ -105,8 +85,7 @@ extension UIImageView {
         }
         
         guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 print("Couldn't download image: ", error)
                 return
@@ -119,8 +98,7 @@ extension UIImageView {
             DispatchQueue.main.async {
                 self.image = image
             }
-        }.resume()
-
+        }
+        .resume()
     }
 }
-
